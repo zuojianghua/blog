@@ -178,9 +178,9 @@ forever start app.js
 
 ##测试环境
 内网测试服务器：192.168.158.165
-SSH信息：root ／ sq365@sqzw
+SSH信息：root ／ yourpassword
 访问地址：http://192.168.158.165:1337/
-账号密码：admin / baison8888
+账号密码：admin / yourpassword
 
 ##参考网址
 > electron的autoUpdater模块  https://github.com/electron/electron/blob/master/docs/api/auto-updater.md
