@@ -91,8 +91,11 @@ http://localhost:1337/
 ```
 
 * 数据库配置（用的是PostgreSQL）
+
 > 引用文档 https://wiki.postgresql.org/wiki/Detailed_installation_guides
+
 > CentOS安装文档 https://wiki.postgresql.org/wiki/YUM_Installation
+
 ```
 ##yum install postgresql-server
 sudo rpm -Uvh http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
@@ -184,8 +187,11 @@ SSH信息：root ／ yourpassword
 
 ##参考网址
 > electron的autoUpdater模块  https://github.com/electron/electron/blob/master/docs/api/auto-updater.md
+
 > electron打包工具windows-installer  https://github.com/electron/windows-installer
+
 > electron版本在线更新服务器electron-release-server  https://github.com/ArekSredzki/electron-release-server
+
 > electron应用中的自动更新事件代码示例  https://github.com/develar/onshape-desktop-shell/blob/master/src/AppUpdater.ts
 
 
