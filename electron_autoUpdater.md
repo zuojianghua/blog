@@ -34,6 +34,32 @@ wget http://npmjs.org/install.sh
 sh install.sh
 ```
 
+* 如果因为gcc编译器版本问题，请升级gcc 4.8
+```
+## 下载gcc4.8源码
+wget http: //ftp.gnu.org/gnu/gcc/gcc-4.8.0/gcc-4.8.0.tar.bz2
+tar -jxvf  gcc-4.8.0.tar.bz2
+
+## 下载依赖库
+cd gcc-4.8.0
+./contrib/download_prerequisites
+cd ..
+
+## 编译
+mkdir gcc-build-4.8.0
+cd  gcc-build-4.8.0
+../gcc-4.8.0/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+make -j4
+sudo make install
+
+## 更新为新版本
+ls /usr/local/bin | grep gcc
+update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/i686-pc-linux-gnu-gcc 40
+
+## 查看版本号
+gcc -v
+```
+
 * 安装淘宝cnpm
 ```
 npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -187,11 +213,7 @@ SSH信息：root ／ yourpassword
 
 ##参考网址
 > electron的autoUpdater模块  https://github.com/electron/electron/blob/master/docs/api/auto-updater.md
-
 > electron打包工具windows-installer  https://github.com/electron/windows-installer
-
 > electron版本在线更新服务器electron-release-server  https://github.com/ArekSredzki/electron-release-server
-
 > electron应用中的自动更新事件代码示例  https://github.com/develar/onshape-desktop-shell/blob/master/src/AppUpdater.ts
-
-
+> 升级gcc版本4.8 http://www.mudbest.com/centos%E5%8D%87%E7%BA%A7gcc4-4-7%E5%8D%87%E7%BA%A7gcc4-8%E6%89%8B%E8%AE%B0/
