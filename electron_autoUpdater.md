@@ -172,7 +172,8 @@ vim  /var/lib/pgsql/data/pg_hba.conf
 ##TODO 8.x版本此处导入有坑 导入表 
 cd ./node_modules/sails-pg-session
 su - postgres
-psql electron_release_server_sessions < ./sql/sails-pg-session-support.sql
+##psql electron_release_server_sessions < ./sql/sails-pg-session-support.sql
+psql electron_release_server_sessions < /root/electron-release-server-master/node_modules/sails-pg-session/sql/sails-pg-session-support.sql
 
 ```
 * 修改配置文件 config/local.js
