@@ -1,5 +1,5 @@
 ##node及其他
-* 方法一 从淘宝镜像下载linux已经编译好的(不建议，cnpm/bower等方法都需要软链接)
+* 方法一 从淘宝镜像下载linux已经编译好的(node/npm/cnpm/bower/forever等方法都需要软链接)
 ```
 ## 下载解压
 wget https://npm.taobao.org/mirrors/node/v6.3.1/node-v6.3.1-linux-x64.tar.gz
@@ -13,7 +13,7 @@ ln -s ~/node-v6.3.1-linux-x64/bin/npm /usr/local/bin/npm
 node -v
 6.3.1
 ```
-* 方法二 下载源文件编译
+* 方法二 下载源文件编译(编译不成功可以用方法一)
 ```
 yum -y install gcc make gcc-c++ openssl-devel wget
 ## 下载解压
@@ -60,7 +60,7 @@ update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/i686-pc-linux-gnu-
 gcc -v
 ```
 
-* 安装淘宝cnpm
+* 安装淘宝cnpm, cnpm是防止npm安装时候某些源被墙, 使用cnpm方法替代
 ```
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 
@@ -86,16 +86,25 @@ git --version
 ```
 cnpm install forever -g
 ## forever需要软链接到/usr/local/bin
+ln -s ~/node-v6.3.1-linux-x64/bin/forever /usr/local/bin/forever
 ```
 
+* 安装bower
+```
+cnpm install bower -g
+## forever需要软链接到/usr/local/bin
+ln -s ~/node-v6.3.1-linux-x64/bin/bower /usr/local/bin/bower
+```
 -------------------
 
 ##electron-release-server部署
 * 服务安装和配置
 ```
+yum install unzip
+
 ## 下载解压electron-release-server
 wget https://github.com/ArekSredzki/electron-release-server/archive/master.zip
-unzip electron-release-server-master.zip
+unzip master.zip
 
 ## 部署web服务
 cd electron-release-server-master
@@ -166,7 +175,7 @@ sudo -u postgres passwd
 
 
 ##设置数据库连接配置
-vim  /var/lib/pgsql/data/pg_hba.conf
+vim  /var/lib/pgsql/9.4/data/pg_hba.conf
 ##将配置文件中的认证 METHOD的ident修改为trust才可以通过密码登陆
 
 ##TODO 8.x版本此处导入有坑 导入表 
@@ -175,12 +184,34 @@ su - postgres
 ##psql electron_release_server_sessions < ./sql/sails-pg-session-support.sql
 psql electron_release_server_sessions < /root/electron-release-server-master/node_modules/sails-pg-session/sql/sails-pg-session-support.sql
 
-##sql文件
+##数据库导入不成功可以用navicat连接后执行初始化sql脚本文件到electron_release_server_sessions数据库
+##脚本在以下链接
 https://raw.githubusercontent.com/ravitej91/sails-pg-session/master/sql/sails-pg-session-support.sql
+
+
 
 ```
 * 修改配置文件 config/local.js
 ```
+appUrl: 'http://192.168.158.165:1337',
+auth: {
+    // Provide a set of credentials that can be used to access the admin interface.
+    static: {
+      username: '此处为管理员账号',
+      password: '此处为管理员密码'
+    },
+    // You can also specify an ldap connection that can be used for authentication.
+    //ldap: {
+    //  usernameField: 'USERNAME_FIELD', // Key at which the username is stored
+    //  server: {
+    //    url: 'ldap://LDAP_SERVER_FQDN:389',
+    //    bindDn: 'INSERT_LDAP_SERVICE_ACCOUNT_USERNAME_HERE',
+    //    bindCredentials: 'INSERT_PASSWORD_HERE',
+    //    searchBase: 'USER_SEARCH_SPACE', // ex: ou=Our Users,dc=companyname,dc=com
+    //    searchFilter: '(USERNAME_FIELD={{username}})'
+    //  }
+    //}
+  },
 connections: {        
     postgresql: {        
         adapter: 'sails-postgresql',        
@@ -197,6 +228,13 @@ session: {
     user: 'electron_release_server_user',        
     password: 'baison',        
     port: 5432    
+},
+files: {
+    // Folder must exist and user running the server must have adequate perms
+    dirname: '/root/electron-release-server-master/download',
+    // Maximum allowed file size in bytes
+    // Defaults to 500MB
+    // maxBytes: 524288000
 }
 
 ```
@@ -217,7 +255,12 @@ SSH信息：root ／ yourpassword
 
 ##参考网址
 > electron的autoUpdater模块  https://github.com/electron/electron/blob/master/docs/api/auto-updater.md
+
 > electron打包工具windows-installer  https://github.com/electron/windows-installer
+
 > electron版本在线更新服务器electron-release-server  https://github.com/ArekSredzki/electron-release-server
+
 > electron应用中的自动更新事件代码示例  https://github.com/develar/onshape-desktop-shell/blob/master/src/AppUpdater.ts
+
 > 升级gcc版本4.8 http://www.mudbest.com/centos%E5%8D%87%E7%BA%A7gcc4-4-7%E5%8D%87%E7%BA%A7gcc4-8%E6%89%8B%E8%AE%B0/
+
