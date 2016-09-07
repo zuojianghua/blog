@@ -175,6 +175,9 @@ su - postgres
 ##psql electron_release_server_sessions < ./sql/sails-pg-session-support.sql
 psql electron_release_server_sessions < /root/electron-release-server-master/node_modules/sails-pg-session/sql/sails-pg-session-support.sql
 
+##sql文件
+https://raw.githubusercontent.com/ravitej91/sails-pg-session/master/sql/sails-pg-session-support.sql
+
 ```
 * 修改配置文件 config/local.js
 ```
